@@ -1,13 +1,38 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<!-- wxml -->
+<swiper class='u-wrp-bnr' indicator-dots='true' autoplay='true' interval='5000' duration='1000' circular='true'>
+  <block wx:for="{{bnrUrl}}" wx:for-index="index">
+    <swiper-item>
+      <image src='{{item.url}}' class='u-img-slide' mode='aspectFill'></image>
+    </swiper-item>
+  </block>
+</swiper>
+
+
+<view class='classify_list'>
+     <view class="classify">电脑</view>
+     <view class="classify">手机</view>
+     <view class="classify">家电</view>
+     <view class="classify">美妆护肤</view>
+     <view class="classify">服装鞋子</view>
+   </view>
+
+
+<view class='list'>
+  <block wx:for='{{list}}' wx:key='list' wx:for-item="item">
+  <view class="list_item">
+      <navigator url='details?id={{item.goods_id}}'>
+      <view class='img' data-goodsid="{{item.goods_id}}" catchtap="catchTap">
+        <image src="{{imghref}}{{item.goods_img}}"  mode="scaleToFill"/>
+      </view>
+      <view class='info'>
+        <view class='title'>商品名称:{{item.goods_name}}</view>
+        <view class='price'>商品价格:￥{{item.shop_price}}</view>
+        <view class='num'>销量:{{item.goods_number}}</view>
+      </view>
+       </navigator>
+      <view class='clear'></view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+  </block>
 </view>
+

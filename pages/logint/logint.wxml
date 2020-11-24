@@ -1,0 +1,2 @@
+<!--pages/logint/logint.wxml-->
+<button open-type="getUserInfo" bindgetuserinfo="login">登录</button>
