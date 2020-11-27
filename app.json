@@ -10,7 +10,8 @@
     "pages/cart/cart",
     "pages/order/order",
     "pages/detail/detail",
-    "pages/logint/logint"
+    "pages/logint/logint",
+    "pages/my/my"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -33,7 +34,7 @@
         "selectedIconPath": "/pages/images/my-select.png"
       },
       {
-        "pagePath": "pages/logs/logs",
+        "pagePath": "pages/cart/cart",
         "text": "购物车",
         "iconPath": "/pages/images/shopcart.png",
         "selectedIconPath": "/pages/images/shopcart-select.png"

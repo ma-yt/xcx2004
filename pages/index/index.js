@@ -18,6 +18,7 @@ Page({
       pagesize:10,   //列表大小
   
   },
+  
   //事件处理函数
   bindViewTap:function() {
     wx.navigateTo({
@@ -55,6 +56,31 @@ Page({
     })
   },
 
+    //登录
+    doLogin:function(){
+      wx.login({
+        success (res) {
+          if (res.code) {
+            //发起网络请求
+            wx.request({
+              url: 'http://2004.mayatong.top/api/home-login?code='+res.code,
+              success:function(d)
+              {
+                //获取登录token
+                wx.setStorage({
+                  key:"token",
+                  data:d.data.data.token
+                })
+              }
+            })
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
+        }
+      })
+    },
+  
+
   catchTap:function(res){
     // console.log(res)
       let goodsid = res.currentTarget.dataset.goodsid
@@ -65,27 +91,9 @@ Page({
 
 
   onLoad: function () {
-    //console.log(this)
-    //let _this = this;
       this.glist();
-
-    //发起网络请求
-  //   wx.request({
-  //     url: 'http://weixin.2004.com/api/goodslist', //仅为示例，并非真实的接口地址
-  //     data: {
-  //       x: 'wert',
-  //       y: 'wertyu'
-  //     },
-  //     header: {
-  //       'content-type': 'application/json' // 默认值
-  //     },
-  //     success: function (data){
-  //     console.log(data);
-  //       _this.setData({
-  //         list:data.data.data.goods
-  //       })
-  //   }
-  // })
+      this.doLogin();
+    
 
     if (app.globalData.userInfo) {
       this.setData({

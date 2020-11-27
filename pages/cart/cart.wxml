@@ -1,71 +1,52 @@
 <!--pages/cart/cart.wxml-->
-<view class='box'>
-  <view class='wrapper'>
-    <view class="tab-content {{selectBook? 'select': 'noSelect'}}" bindtap='chooseBookCart'>书本</view>
-    <view class="tab-content {{selectThing? 'select': 'noSelect'}}" bindtap='chooseThingCart'>物品</view>
- 
+<view class="page-box">
+  <!-- 头部开始  -->
+  <view class="cart-top">
+    <view class="top-left">共x件商品</view>
+    <view class="top-right">删除</view>
   </view>
-</view>
-<!-- 书本 -->
-<view class="cart-box" wx:if="{{selectBook}}">
-  <!-- wx:for 渲染购物车列表 -->
-  <view wx:for="{{carts}}" wx:key="{{carts}}" class='cart-goods'>
-    <!-- wx:if 是否选择显示不同图标 -->
- <view class='icon-wrapper' bindtap="selectList" data-index="{{index}}">
-    <icon wx:if="{{item.selected}}" class='cart-icon' type="success" color="red"  />
-    <icon wx:else type="circle" class='cart-icon'  />
-    </view>
-    <view  class='cart-img'>
-      <image class="cart-thumb" src="{{item.picture}}"></image>
-      <view class='cart-message'>
-        <text class='name'>书名：{{item.bname}}</text>
-        <text class='author'>作者：{{item.author}}</text>
-        <text class='press'>出版社：{{item.press}}</text>
-        <text class='price'>价格：￥{{item.bprice}}</text>
+  <!-- 头部结束 -->   
+
+  <!-- 列表开始 -->
+  <view class="item-list">
+    <view class="item" wx:for="{{list}}" wx:key="*this">
+      <checkbox-group bindchange="checkboxChange">
+        <label class="checkbox">
+          <checkbox value="1" checked="{{item.checked}}"> </checkbox>
+        </label>
+      </checkbox-group>
+      <view class="pic">
+        <image src="//img11.360buyimg.com/n7/jfs/t1/121074/1/16465/121137/5f97b38cEd8f11274/9ab05f914ad14eba.jpg"></image>
+      </view>
+      <view class="content">
+        <view class="title">{{item.goods_name}}</view>
+        <view class="desc">品牌:iphone</view>
+        <view class="price-info">
+          <view class="price">${{item.cart_price}}</view>
+          <view class="number">
+            <view class="decr">-</view>
+            <input value="{{item.goods_number}}"></input>
+            <view class="incr">+</view>
+          </view>
+        </view>
       </view>
     </view>
-    <!-- 点击商品图片可跳转到商品详情 -->
-    
-    <!-- 删除按钮 -->
-    <text bindtap="deleteList" data-index="{{index}}" class='delete'> × </text>
   </view>
-  <view wx:if="{{isMyCartShow}}" class='bottom'>没有书本啦~_~</view>
-</view>
-<!-- 物品 -->
-<view class="cart-box" wx:if="{{selectThing}}">
-  <!-- wx:for 渲染购物车列表 -->
-  <view wx:for="{{thingCarts}}" wx:key="{{thingCarts}}" class='cart-goods'>
-    <!-- wx:if 是否选择显示不同图标 -->
-     <view class='icon-wrapper' bindtap="selectListThing" data-index="{{index}}">
-    <icon wx:if="{{item.selected}}" class='cart-icon' type="success" color="red"  />
-    <icon wx:else type="circle" class='cart-icon'  />
+  <!-- 列表结束 -->
+
+  <!-- 底部结算 开始 -->
+  <view class="total-box">
+    <view class="all">
+      <checkbox-group bindchange="selectAll">
+        <checkbox value="1" checked="{{isSelectAll}}"  />
+        <text>全选</text>
+      </checkbox-group>
     </view>
- 
-    <view  class='cart-img'>
-      <image class="cart-thumb" src="{{item.gpicture}}"></image>
-      <view class='cart-message'>
-        <text class="name">{{item.gname}}</text>
-        <text class="author">校区：{{item.gcollege}}</text>
-        <text class='author'>成色：{{item.gstatus}}</text>
-        <text class='author'>发布者：{{item.usersname}}</text>
-        <text class='price'>￥{{item.gprice}}</text>
-      </view>
+    <view class="total-price">
+      总价：
+      <text class="price">${{totalAmount}}</text>
     </view>
-    <!-- 点击商品图片可跳转到商品详情 -->
-    
-    <!-- 删除按钮 -->
-    <text bindtap="deleteListThing" data-index="{{index}}" class='delete'> × </text>
+    <view class="btn btn-default">去结算</view>
   </view>
-  <view wx:if="{{isThingCartShow}}" class='bottom'>没有物品啦~_~</view>
-</view>
-<!-- 底部操作栏 -->
-<view class='cart-bottom'>
-  <!-- wx:if 是否全选显示不同图标 -->
-  <icon wx:if="{{selectAllStatus}}" class='cart-iconAll' type="success_circle" color="red" bindtap="selectAll" />
-  <icon wx:else type="circle" class='cart-iconAll' color="#ff7100" bindtap="selectAll" />
-  <text class='cart-allSelect' bindtap="selectAll">全选</text>
-  <!-- 总价 -->
-  <text class='cart-allPrice'>合计:</text>
-  <text class='allPrice'>￥{{totalPrice}}</text>
-  <button class='btn-red' bindtap='toBuy' form-type='submit'>去结算</button>
+  <!-- 底部结算 结束 -->
 </view>

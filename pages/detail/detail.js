@@ -38,8 +38,29 @@ Page({
   //跳转购物车
   addCar:function(a){
       //console.log(a);
+      let goods_id = a.currentTarget.dataset.goods_id
+      let token = wx.getStorageSync('token')
       wx.reLaunch({
         url: '/pages/cart/cart?goods_id='+a.currentTarget.dataset.goods_id
+      })
+
+      wx.request({
+        url: 'http://2004.mayatong.top/api/cart?token='+token,
+        method:'POST',
+        dataType:'json',
+        header:{'content-type':'application/x-www-form-urlencoded'},
+        data:{
+          goods_id:goods_id
+        },
+        success:function(res){
+            console.log(res);
+        }
+      })
+
+      wx.showToast({
+        title: '加入购物车成功',
+        icon: 'success',
+        duration: 2000
       })
   },
 
@@ -48,6 +69,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // console.log(options);
     let _this = this;
     let goods_id = options.goods_id;
        wx.request({
@@ -56,7 +78,7 @@ Page({
             goods_id:goods_id
           },
           success:function(res){
-            console.log(res);
+            // console.log(res);
             
             _this.setData({
               // list:data
@@ -64,6 +86,44 @@ Page({
               })
           }
        })
+  },
+
+  /**
+   * 收藏
+   */
+  shoucang:function(a){
+    // console.log(a);
+    let goods_id = a.currentTarget.dataset.goodsid
+    let token = wx.getStorageSync('token')
+    wx.request({
+      url: 'http://2004.mayatong.top/api/add-fav?goods_id='+goods_id+'&token='+token,
+    })
+    wx.showToast({
+      title: '收藏成功',
+      icon: 'success',
+      duration: 2000
+    })
+  },
+
+  /**
+   * 客服
+   */
+  makeCall:function(){
+    wx.makePhoneCall({
+      phoneNumber: '15032402768' //仅为示例，并非真实的电话号码
+    })
+  },
+
+  switchHome:function(){
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
+  },
+
+  switchCart:function(){
+    wx.switchTab({
+      url: '/pages/cart/cart'
+    })
   },
 
   /**
