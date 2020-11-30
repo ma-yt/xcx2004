@@ -75,7 +75,7 @@ Page({
     let token = wx.getStorageSync('token')
     console.log(token);
     wx.request({
-      url: 'http://weixin.2004.com/api/cart-list?token='+token,
+      url: 'http://2004.mayatong.top/api/cart-list?token='+token,
       success: function(d)
       {
         // console.log(d);
@@ -217,7 +217,7 @@ Page({
 
       //请求后台接口
       wx.request({
-        url: 'http://weixin.2004.com/api/cart?token='+token,
+        url: 'http://2004.mayatong.top/api/cart?token='+token,
         method:'post',
         data:{
           goods_id:list[index].goods_id,
