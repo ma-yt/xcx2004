@@ -32,7 +32,7 @@ Page({
               u: userinfo
             },
             success: function(res){
-              wx.setStorageSync('token',res.data.token)
+              console.log(res);
             }
           })
         } else {

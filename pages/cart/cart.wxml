@@ -3,20 +3,19 @@
   <!-- 头部开始  -->
   <view class="cart-top">
     <view class="top-left">共x件商品</view>
-    <view class="top-right">删除</view>
+    <view class="top-right" bindtap="del">删除</view>
   </view>
   <!-- 头部结束 -->   
 
   <!-- 列表开始 -->
   <view class="item-list">
-    <view class="item" wx:for="{{list}}" wx:key="*this">
-      <checkbox-group bindchange="checkboxChange">
-        <label class="checkbox">
-          <checkbox value="1" checked="{{item.checked}}"> </checkbox>
+  <checkbox-group bindchange="selects" data-id="{{list[index].goods_id}}">
+    <view class="item" wx:for="{{list}}" wx:key="index">
+        <label class="checkbox" >
+          <checkbox value="{{list[index].goods_id}}" checked="{{item.checked}}"> </checkbox>
         </label>
-      </checkbox-group>
       <view class="pic">
-        <image src="//img11.360buyimg.com/n7/jfs/t1/121074/1/16465/121137/5f97b38cEd8f11274/9ab05f914ad14eba.jpg"></image>
+        <image src="{{imghref}}{{item.goods_img}}"></image>
       </view>
       <view class="content">
         <view class="title">{{item.goods_name}}</view>
@@ -24,13 +23,14 @@
         <view class="price-info">
           <view class="price">${{item.cart_price}}</view>
           <view class="number">
-            <view class="decr">-</view>
+            <view class="decr" data-goodsindex="{{index}}" bindtap="decrgoods">-</view>
             <input value="{{item.goods_number}}"></input>
-            <view class="incr">+</view>
+            <view class="incr" data-goodsindex="{{index}}" bindtap="incrgoods">+</view>
           </view>
         </view>
       </view>
     </view>
+  </checkbox-group>
   </view>
   <!-- 列表结束 -->
 
@@ -38,7 +38,7 @@
   <view class="total-box">
     <view class="all">
       <checkbox-group bindchange="selectAll">
-        <checkbox value="1" checked="{{isSelectAll}}"  />
+        <checkbox value="1" checked="{{isSelectAll}}"/>
         <text>全选</text>
       </checkbox-group>
     </view>

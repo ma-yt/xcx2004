@@ -67,6 +67,7 @@ Page({
               success:function(d)
               {
                 //获取登录token
+                console.log(d);
                 wx.setStorage({
                   key:"token",
                   data:d.data.data.token
